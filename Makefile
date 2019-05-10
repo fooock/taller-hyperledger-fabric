@@ -47,3 +47,12 @@ logs-lonja:
 crypto-pescadores:
 	rm -Rf ./blockchain/pescadores/crypto-config
 	cryptogen generate --config=./blockchain/pescadores/crypto-config.yaml --output=./blockchain/pescadores/crypto-config
+
+
+##
+## COMPRADORES
+##
+
+crypto-compradores:
+	rm -Rf ./blockchain/compradores/crypto-config
+	cryptogen generate --config=./blockchain/compradores/crypto-config.yaml --output=./blockchain/compradores/crypto-config
