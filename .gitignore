@@ -2,3 +2,5 @@ build/
 out/
 crypto-config/
 channel-artifacts/
+chaincode/
+scripts/*.block
