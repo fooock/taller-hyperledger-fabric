@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+
+  peer0.comprador1.com:
+    container_name: peer0.comprador1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.comprador1.com
+      - CORE_PEER_ADDRESS=peer0.comprador1.com:11051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.comprador1.com:11052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.comprador1.com:12051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.comprador1.com:11051
+      - CORE_PEER_LOCALMSPID=Comprador1Msp
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/comprador1.com/peers/peer0.comprador1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/comprador1.com/peers/peer0.comprador1.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.comprador1.com:/var/hyperledger/production
+    ports:
+      - 11051:11051
+
+  peer1.comprador1.com:
+    container_name: peer1.comprador1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.comprador1.com
+      - CORE_PEER_ADDRESS=peer1.comprador1.com:12051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:12051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.comprador1.com:12052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:12052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.comprador1.com:12051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.comprador1.com:11051
+      - CORE_PEER_LOCALMSPID=Comprador1Msp
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/comprador1.com/peers/peer1.comprador1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/comprador1.com/peers/peer1.comprador1.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.comprador1.com:/var/hyperledger/production
+
+    ports:
+      - 12051:12051

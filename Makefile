@@ -90,3 +90,18 @@ channel-compradores:
 
 	# Copiamos los certificados del orderer para usarlos posteriormente
 	cp -r ./blockchain/lonja/crypto-config/ordererOrganizations ./blockchain/compradores/crypto-config/
+
+start-compradores:
+	COMPRADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/compradores/crypto-config/peerOrganizations/comprador1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/compradores/ca.yaml -f ./blockchain/compradores/peer.yaml -f ./blockchain/compradores/couch.yaml up -d
+
+stop-compradores:
+	COMPRADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/compradores/crypto-config/peerOrganizations/comprador1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/compradores/ca.yaml -f ./blockchain/compradores/peer.yaml -f ./blockchain/compradores/couch.yaml down --volumes --remove-orphans
+
+logs-compradores:
+	COMPRADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/compradores/crypto-config/peerOrganizations/comprador1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/compradores/ca.yaml -f ./blockchain/compradores/peer.yaml -f ./blockchain/compradores/couch.yaml logs -f

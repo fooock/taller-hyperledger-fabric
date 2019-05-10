@@ -1,0 +1,23 @@
+version: '2'
+
+networks:
+  byfn:
+
+services:
+  comprador1-ca:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=comprador1-ca
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.comprador1.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/${COMPRADOR1_CA_PRIVATE_KEY}
+      - FABRIC_CA_SERVER_PORT=9054
+    ports:
+      - "9054:9054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.comprador1.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/${COMPRADOR1_CA_PRIVATE_KEY} -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/comprador1.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: comprador1.ca
+    networks:
+      - byfn
