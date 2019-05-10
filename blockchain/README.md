@@ -38,3 +38,10 @@ $ make start-lonja
 > En caso de querer parar los componentes de esta organización y eliminar los volumenes asocionados, ejecuta el comando `make stop-lonja`
 
 Ahora, finalizado la inicialización de los contenedores docker, podremos crear y unir nuestros peers a los canales `compradoresch` y `pescadoresch`.
+Para ver este proceso, ver script `channel.sh`
+
+```bash
+$ docker exec -it lonja1-cli bash
+$ ./channel.sh
+```
+

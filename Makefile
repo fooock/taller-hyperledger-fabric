@@ -48,6 +48,15 @@ crypto-pescadores:
 	rm -Rf ./blockchain/pescadores/crypto-config
 	cryptogen generate --config=./blockchain/pescadores/crypto-config.yaml --output=./blockchain/pescadores/crypto-config
 
+channel-pescadores:
+	rm -rf ./blockchain/pescadores/channel-artifacts && mkdir -p ./blockchain/pescadores/channel-artifacts
+
+	# Crear configuracion en formato json
+	FABRIC_CFG_PATH=./blockchain/pescadores \
+	configtxgen -printOrg Pescador1 > ./blockchain/pescadores/channel-artifacts/pescador1.json
+
+	# Copiamos los certificados del orderer para usarlos posteriormente
+	cp -r ./blockchain/lonja/crypto-config/ordererOrganizations ./blockchain/pescadores/crypto-config/
 
 ##
 ## COMPRADORES
