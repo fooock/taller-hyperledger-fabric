@@ -1,0 +1,60 @@
+version: '2'
+
+services:
+  orderer.lonja1.com:
+    container_name: orderer.lonja1.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+        - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../crypto-config/ordererOrganizations/lonja1.com/orderers/orderer.lonja1.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/lonja1.com/orderers/orderer.lonja1.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.lonja1.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.lonja1.com:
+    container_name: peer0.lonja1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.lonja1.com
+      - CORE_PEER_ADDRESS=peer0.lonja1.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.lonja1.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.lonja1.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.lonja1.com:7051
+      - CORE_PEER_LOCALMSPID=Lonja1Msp
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/lonja1.com/peers/peer0.lonja1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/lonja1.com/peers/peer0.lonja1.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.lonja1.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+
+  peer1.lonja1.com:
+    container_name: peer1.lonja1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.lonja1.com
+      - CORE_PEER_ADDRESS=peer1.lonja1.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.lonja1.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.lonja1.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.lonja1.com:7051
+      - CORE_PEER_LOCALMSPID=Lonja1Msp
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/lonja1.com/peers/peer1.lonja1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/lonja1.com/peers/peer1.lonja1.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.lonja1.com:/var/hyperledger/production
+
+    ports:
+      - 8051:8051

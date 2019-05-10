@@ -20,3 +20,19 @@ channel-lonja:
 	FABRIC_CFG_PATH=./blockchain/lonja configtxgen -profile Lonja1CompradoresChannel \
 	-outputCreateChannelTx ./blockchain/lonja/channel-artifacts/compradoreschannel.tx \
 	-channelID compradoresch
+
+start-lonja:
+	LONJA1_CA_PRIVATE_KEY=$(shell find ./blockchain/lonja/crypto-config/peerOrganizations/lonja1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/lonja/ca.yaml -f ./blockchain/lonja/cli.yaml -f ./blockchain/lonja/couch.yaml up -d
+
+stop-lonja:
+	LONJA1_CA_PRIVATE_KEY=$(shell find ./blockchain/lonja/crypto-config/peerOrganizations/lonja1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/lonja/ca.yaml -f ./blockchain/lonja/cli.yaml -f ./blockchain/lonja/couch.yaml down --volumes --remove-orphans
+
+logs-lonja:
+	LONJA1_CA_PRIVATE_KEY=$(shell find ./blockchain/lonja/crypto-config/peerOrganizations/lonja1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/lonja/ca.yaml -f ./blockchain/lonja/cli.yaml -f ./blockchain/lonja/couch.yaml logs -f
+
