@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+
+  peer0.pescador1.com:
+    container_name: peer0.pescador1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.pescador1.com
+      - CORE_PEER_ADDRESS=peer0.pescador1.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.pescador1.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.pescador1.com:10501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.pescador1.com:9051
+      - CORE_PEER_LOCALMSPID=Pescador1Msp
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/pescador1.com/peers/peer0.pescador1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/pescador1.com/peers/peer0.pescador1.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.pescador1.com:/var/hyperledger/production
+    ports:
+      - 9051:9051
+
+  peer1.pescador1.com:
+    container_name: peer1.pescador1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.pescador1.com
+      - CORE_PEER_ADDRESS=peer1.pescador1.com:10501
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10501
+      - CORE_PEER_CHAINCODEADDRESS=peer1.pescador1.com:10502
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10502
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.pescador1.com:10501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.pescador1.com:9051
+      - CORE_PEER_LOCALMSPID=Pescador1Msp
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/pescador1.com/peers/peer1.pescador1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/pescador1.com/peers/peer1.pescador1.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.pescador1.com:/var/hyperledger/production
+
+    ports:
+      - 10501:10501

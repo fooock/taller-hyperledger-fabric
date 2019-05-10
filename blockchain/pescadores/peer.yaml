@@ -1,0 +1,26 @@
+version: '2'
+
+volumes:
+  peer0.pescador1.com:
+  peer1.pescador1.com:
+
+networks:
+  byfn:
+
+services:
+
+  peer0.pescador1.com:
+    container_name: peer0.pescador1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.pescador1.com
+    networks:
+      - byfn
+
+  peer1.pescador1.com:
+    container_name: peer1.pescador1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.pescador1.com
+    networks:
+      - byfn

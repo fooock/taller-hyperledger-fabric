@@ -1,3 +1,4 @@
+---
 Organizations:
     - &Comprador1
         # DefaultOrg defines the organization which is used in the sampleconfig

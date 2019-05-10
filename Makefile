@@ -58,6 +58,21 @@ channel-pescadores:
 	# Copiamos los certificados del orderer para usarlos posteriormente
 	cp -r ./blockchain/lonja/crypto-config/ordererOrganizations ./blockchain/pescadores/crypto-config/
 
+start-pescadores:
+	PESCADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/pescadores/crypto-config/peerOrganizations/pescador1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/pescadores/ca.yaml -f ./blockchain/pescadores/peer.yaml -f ./blockchain/pescadores/couch.yaml up -d
+
+stop-pescadores:
+	PESCADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/pescadores/crypto-config/peerOrganizations/pescador1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/pescadores/ca.yaml -f ./blockchain/pescadores/peer.yaml -f ./blockchain/pescadores/couch.yaml down --volumes --remove-orphans
+
+logs-pescadores:
+	PESCADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/pescadores/crypto-config/peerOrganizations/pescador1.com/ca/*_sk -printf "%f") \
+	IMAGE_TAG=$(HF_VERSION) \
+	docker-compose -f ./blockchain/pescadores/ca.yaml -f ./blockchain/pescadores/peer.yaml -f ./blockchain/pescadores/couch.yaml logs -f
+
 ##
 ## COMPRADORES
 ##
@@ -65,3 +80,13 @@ channel-pescadores:
 crypto-compradores:
 	rm -Rf ./blockchain/compradores/crypto-config
 	cryptogen generate --config=./blockchain/compradores/crypto-config.yaml --output=./blockchain/compradores/crypto-config
+
+channel-compradores:
+	rm -rf ./blockchain/compradores/channel-artifacts && mkdir -p ./blockchain/compradores/channel-artifacts
+
+	# Crear configuracion en formato json
+	FABRIC_CFG_PATH=./blockchain/compradores \
+	configtxgen -printOrg Comprador1 > ./blockchain/compradores/channel-artifacts/comprador1.json
+
+	# Copiamos los certificados del orderer para usarlos posteriormente
+	cp -r ./blockchain/lonja/crypto-config/ordererOrganizations ./blockchain/compradores/crypto-config/
