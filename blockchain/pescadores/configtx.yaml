@@ -1,0 +1,17 @@
+Organizations:
+    - &Pescador1
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: Pescador1
+
+        # ID to load the MSP definition as
+        ID: Pescador1Msp
+
+        MSPDir: crypto-config/peerOrganizations/pescador1.com/msp
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.pescador1.com
+              Port: 11051
