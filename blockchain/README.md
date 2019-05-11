@@ -13,7 +13,7 @@ se llamará `pescadoresch`.
 * Un canal dedicado al intercambio de información de compra, entr los actores lonja y compradores. La información 
 de este canal será confidencial, y los pescadores no podrán ver las transacciones que se realicen aquí.
 
-# Iniciar la organización Lonja1
+# Iniciar la organización `Lonja1`
 
 Lo primero que tendremos que hacer será crear el material criptografico que usarán los miembros que pertenezcan a 
 la organización. Ejecutaremos el comando:
@@ -45,3 +45,34 @@ $ docker exec -it lonja1-cli bash
 $ ./channel.sh
 ```
 
+# Iniciar organización `Pescador1`
+
+Lo primero que tendremos que hacer será crear el material criptografico que usarán los miembros que pertenezcan a 
+la organización. Ejecutaremos el comando:
+
+```bash
+$ make crypto-pescadores
+```
+
+Ejecutamos el siguiente comando para crear la configuración que usaremos para añadir esta organización a la organización
+`Lonja1`.
+
+```bash
+$ make channel-pescadores
+```
+
+# Iniciar organización `Comprador1`
+
+Lo primero que tendremos que hacer será crear el material criptografico que usarán los miembros que pertenezcan a 
+la organización. Ejecutaremos el comando:
+
+```bash
+$ make crypto-compradores
+```
+
+Ejecutamos el siguiente comando para crear la configuración que usaremos para añadir esta organización a la organización
+`Lonja1`.
+
+```bash
+$ make channel-compradores
+```
