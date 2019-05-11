@@ -1,3 +1,5 @@
+echo "Install jq"
+apt-get update && apt-get install jq
 
 ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/lonja1.com/orderers/orderer.lonja1.com/msp/tlscacerts/tlsca.lonja1.com-cert.pem
 PEER0_ORG1_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/lonja1.com/peers/peer0.lonja1.com/tls/ca.crt
