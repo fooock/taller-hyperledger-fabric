@@ -57,7 +57,10 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./../chaincode/:/opt/gopath/src/github.com/chaincode
-        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./crypto-config/peerOrganizations/lonja1.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/lonja1.com
+        - ./crypto-config/ordererOrganizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations
+        - ./../pescadores/crypto-config/peerOrganizations/pescador1.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/pescador1.com
+        - ./../compradores/crypto-config/peerOrganizations/comprador1.com:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/comprador1.com
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/lonja
         - ./../pescadores/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/pescadores
         - ./../compradores/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/compradores

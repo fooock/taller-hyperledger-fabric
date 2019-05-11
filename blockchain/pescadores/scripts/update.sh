@@ -9,22 +9,15 @@ CORE_PEER_ADDRESS=peer0.pescador1.com:9051
 
 # Vamos a actualizar la configuracion del canal percadoresch
 echo "==== Preparado para obtener la configuracion del canal pescadoresch... ===="
-peer channel fetch config pescadores_block.pb \
--o orderer.lonja1.com:7050 \
--c pescadoresch \
---tls true \
---cafile $ORDERER_CA
+peer channel fetch config pescadores_block.pb -o orderer.lonja1.com:7050 -c pescadoresch --tls --cafile $ORDERER_CA
 echo "==== ¿Finaliza con exito? $?"
 
 echo "==== Decodificar configuracion de bloque a formato JSON ===="
-configtxlator proto_decode \
---input pescadores_block.pb \
---type common.Block | jq .data.data[0].payload.data.config > pescadores_config.json
+configtxlator proto_decode --input pescadores_block.pb --type common.Block | jq .data.data[0].payload.data.config > pescadores_config.json
 echo "==== ¿Se ha escrito la configuracion en pescadores_config.json? $? ===="
 
 echo "==== Preparado para modificar la configuracion para añadir la nueva configuracion ===="
-jq -s '.[0] * {"channel_group":{"groups":{"Application":{"groups": {"Pescador1Msp":.[1]}}}}}' \
-pescadores_config.json ./blockchain/pescadores/channel-artifacts/pescador1.json > pescadores_config_mod.json
+jq -s '.[0] * {"channel_group":{"groups":{"Application":{"groups": {"Pescador1Msp":.[1]}}}}}' pescadores_config.json ./channel-artifacts/pescador1.json > pescadores_config_mod.json
 
 configtxlator proto_encode --input pescadores_config.json --type common.Config >original_config.pb
 configtxlator proto_encode --input pescadores_config_mod.json --type common.Config >modified_config.pb

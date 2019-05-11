@@ -56,7 +56,7 @@ channel-pescadores:
 	configtxgen -printOrg Pescador1 > ./blockchain/pescadores/channel-artifacts/pescador1.json
 
 	# Copiamos los certificados del orderer para usarlos posteriormente
-	cp -r ./blockchain/lonja/crypto-config/ordererOrganizations ./blockchain/pescadores/crypto-config/
+	cp ./blockchain/pescadores/channel-artifacts/pescador1.json ./blockchain/lonja/channel-artifacts/
 
 start-pescadores:
 	PESCADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/pescadores/crypto-config/peerOrganizations/pescador1.com/ca/*_sk -printf "%f") \
@@ -89,7 +89,7 @@ channel-compradores:
 	configtxgen -printOrg Comprador1 > ./blockchain/compradores/channel-artifacts/comprador1.json
 
 	# Copiamos los certificados del orderer para usarlos posteriormente
-	cp -r ./blockchain/lonja/crypto-config/ordererOrganizations ./blockchain/compradores/crypto-config/
+	cp ./blockchain/pescadores/channel-artifacts/pescador1.json ./blockchain/lonja/channel-artifacts/
 
 start-compradores:
 	COMPRADOR1_CA_PRIVATE_KEY=$(shell find ./blockchain/compradores/crypto-config/peerOrganizations/comprador1.com/ca/*_sk -printf "%f") \

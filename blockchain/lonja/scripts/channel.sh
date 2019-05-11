@@ -14,7 +14,7 @@ CORE_PEER_ADDRESS=peer0.lonja1.com:7051
 echo "==== Creando canal para pescadores ===="
 peer channel create -o orderer.lonja1.com:7050 \
 -c pescadoresch \
--f ./../channel-artifacts/pescadoreschannel.tx \
+-f ./channel-artifacts/pescadoreschannel.tx \
 --tls true \
 --cafile $ORDERER_CA
 echo "==== ¿Canal de pescadores creado? '$?' ===="
@@ -23,7 +23,7 @@ echo "==== ¿Canal de pescadores creado? '$?' ===="
 echo "==== Creando canal para compradores ===="
 peer channel create -o orderer.lonja1.com:7050 \
 -c compradoresch \
--f ./../channel-artifacts/compradoreschannel.tx \
+-f ./channel-artifacts/compradoreschannel.tx \
 --tls true \
 --cafile $ORDERER_CA
 echo "==== ¿Canal de compradores creado? '$?' ===="
