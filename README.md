@@ -8,3 +8,8 @@ de una lonja, desde la llegada del pescado, hasta la distribución del mismo. In
 * Compradores
 * Distribuidores
 
+## Requisitos
+
+```
+$ curl -sSL http://bit.ly/2ysbOFE | bash -s
+```
